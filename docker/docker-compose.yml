@@ -55,7 +55,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
       PGDATA: /data/postgres
     volumes:
-       - postgres_data:/data/postgres
+      - postgres_data:/data/postgres
     ports:
       - "5432:5432"
     restart: unless-stopped
@@ -68,12 +68,12 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
       PGADMIN_CONFIG_SERVER_MODE: 'False'
     volumes:
-       - pgadmin_data:/var/lib/pgadmin
+      - pgadmin_data:/var/lib/pgadmin
     ports:
       - "${PGADMIN_PORT:-5050}:80"
     restart: unless-stopped
 
-      
+
 volumes:
   zookeeper_data:
     driver: local
@@ -85,10 +85,10 @@ volumes:
     driver: local
   pgadmin_data:
     driver: local
-  
-   
+
+
 networks:
-  default:    
+  default:
     name: kafkacqrs-network
     external: true
     

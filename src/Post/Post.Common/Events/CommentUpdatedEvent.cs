@@ -4,7 +4,7 @@ namespace Post.Common.Events;
 
 public class CommentUpdatedEvent : BaseEvent
 {
-    public CommentUpdatedEvent(string type) : base(nameof(CommentAddedEvent))
+    public CommentUpdatedEvent() : base(nameof(CommentUpdatedEvent))
     {
     }
     

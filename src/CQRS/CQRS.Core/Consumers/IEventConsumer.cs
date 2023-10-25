@@ -1,6 +1,6 @@
 namespace CQRS.Core.Consumers;
 
-public interface IEventConsumers
+public interface IEventConsumer
 {
     void Consume(string topic);
 }

@@ -21,4 +21,10 @@
       <Folder Include="Controllers\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="Confluent.Kafka">
+        <HintPath>..\..\..\..\..\..\.nuget\packages\confluent.kafka\2.2.0\lib\net6.0\Confluent.Kafka.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

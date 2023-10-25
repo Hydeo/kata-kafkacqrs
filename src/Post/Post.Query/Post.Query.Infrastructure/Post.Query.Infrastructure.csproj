@@ -11,6 +11,12 @@
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.22"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="Confluent.Kafka">
+        <HintPath>..\..\..\..\..\..\.nuget\packages\confluent.kafka\2.2.0\lib\net6.0\Confluent.Kafka.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>

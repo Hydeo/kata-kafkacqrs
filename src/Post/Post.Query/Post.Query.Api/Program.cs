@@ -27,6 +27,7 @@ var dataContext = builder.Services.BuildServiceProvider().GetRequiredService<Cus
 dataContext.Database.EnsureCreated();
 
 builder.Services.AddControllers();
+builder.Services.AddHostedService<ConsumerHostedService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -2,19 +2,15 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\CQRS\CQRS.Core\CQRS.Core.csproj"/>
+        <ProjectReference Include="..\..\Post.Common\Post.Common.csproj"/>
         <ProjectReference Include="..\Post.Query.Domain\Post.Query.Domain.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Confluent.Kafka" Version="2.2.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.23" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1"/>
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.22"/>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Reference Include="Confluent.Kafka">
-        <HintPath>..\..\..\..\..\..\.nuget\packages\confluent.kafka\2.2.0\lib\net6.0\Confluent.Kafka.dll</HintPath>
-      </Reference>
     </ItemGroup>
 
     <PropertyGroup>

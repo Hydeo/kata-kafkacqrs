@@ -30,7 +30,7 @@ public class KafkaEventProducer : IEventProducer
 
         var deliveryResult = await producer.ProduceAsync(topic, eventMessage);
 
-        if (deliveryResult.Status == PersistenceStatus.Persisted)
+        if (deliveryResult.Status != PersistenceStatus.Persisted)
         {
             throw new Exception(
                 $"{@event.GetType()} message to topic '{topic}' could not be produced. Reason : {deliveryResult.Message}");

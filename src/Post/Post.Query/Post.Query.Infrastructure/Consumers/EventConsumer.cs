@@ -36,7 +36,7 @@ public class EventConsumer :IEventConsumer
             var options = new JsonSerializerOptions { Converters = { new EventJsonConverter() } }; //Important to pass the custom converter to allow polymorphic use 
             var @event = JsonSerializer.Deserialize<BaseEvent>(kafkaConsumerResult.Message.Value, options);
 
-            var handlerMethod = _eventHandler.GetType().GetMethod("On", new Type[] { _eventHandler.GetType() }); //Reflection : This will select the "On" method with the correctly typed parameter
+            var handlerMethod = _eventHandler.GetType().GetMethod("On", new Type[] { @event.GetType() }); //Reflection : This will select the "On" method with the correctly typed parameter
 
             if (handlerMethod is null)
             {

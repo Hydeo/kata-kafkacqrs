@@ -14,7 +14,7 @@ public class CommandHandler :ICommandHandler
 
     public async Task HandleAsync(NewPostCommand command)
     {
-        var aggregate = new PostAggregate(command.Id,command.Author,command.Author);
+        var aggregate = new PostAggregate(command.Id,command.Author,command.Message);
         await _eventSourcingHandler.SaveAsync(aggregate);
     }
 

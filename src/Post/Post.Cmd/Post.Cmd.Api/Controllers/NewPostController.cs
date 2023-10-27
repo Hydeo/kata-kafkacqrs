@@ -45,11 +45,11 @@ public class NewPostController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.Log(LogLevel.Error, ex, "The request is incorrect");
+            _logger.Log(LogLevel.Error, ex, "Error while processing NewPost request");
             return StatusCode(StatusCodes.Status500InternalServerError, new NewPostResponse
             {
                 Id = id,
-                Message = "The request is incorrect"
+                Message = "Error while processing the request"
             });
         }
     }

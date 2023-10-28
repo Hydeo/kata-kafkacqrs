@@ -89,6 +89,7 @@ public class PostAggregate : AggregateRoot
         RaiseEvent(new CommentAddedEvent
         {
             Id = _id,
+            CommentId = Guid.NewGuid(),
             Comment = comment,
             Username = username,
             CommentDate = DateTime.UtcNow

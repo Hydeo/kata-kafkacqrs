@@ -20,10 +20,10 @@ public class EventSourcingHandler: IEventSourcingHandler<PostAggregate>
         aggregate.MarkChangesAsCommitted();
     }
 
-    public async Task<PostAggregate> GetByIdAsync(Guid id)
+    public async Task<PostAggregate> GetByIdAsync(Guid aggregateId)
     {
         var aggregate = new PostAggregate();
-        var events = await _eventStore.GetEventsAsync(id);
+        var events = await _eventStore.GetEventsAsync(aggregateId);
         
         if (events is null || !events.Any()) return aggregate;
         

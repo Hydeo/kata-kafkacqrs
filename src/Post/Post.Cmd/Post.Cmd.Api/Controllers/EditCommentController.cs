@@ -9,20 +9,19 @@ namespace Post.Cmd.Api.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-public class AddCommentController : ControllerBase
+public class EditCommentController : ControllerBase
 {
-    private readonly ILogger<AddCommentController> _logger;
+    private readonly ILogger<EditCommentController> _logger;
     private readonly ICommandDispatcher _commandDispatcher;
 
-    public AddCommentController(ILogger<AddCommentController> logger, ICommandDispatcher commandDispatcher)
+    public EditCommentController(ILogger<EditCommentController> logger, ICommandDispatcher commandDispatcher)
     {
         _logger = logger;
         _commandDispatcher = commandDispatcher;
     }
-    
-    
+
     [HttpPut("{id}")]
-    public async Task<ActionResult> AddCommentAsync(Guid id, AddCommentCommand command)
+    public async Task<ActionResult> EditCommentAsync(Guid id, EditCommentCommand command)
     {
         try
         {
@@ -31,7 +30,7 @@ public class AddCommentController : ControllerBase
 
             return StatusCode(StatusCodes.Status200OK, new BaseResponse
             {
-                Message = "Comment Added"
+                Message = "Comment Edited"
             });
         }
         catch (InvalidOperationException ex)
@@ -53,8 +52,8 @@ public class AddCommentController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.Log(LogLevel.Error, ex, "Error while processing AddComment request");
-            return StatusCode(StatusCodes.Status500InternalServerError, new BaseResponse
+            _logger.Log(LogLevel.Error, ex, "Error while processing EditComment request");
+            return StatusCode(StatusCodes.Status500InternalServerError, new BaseResponse()
             {
                 Message = "Error while processing the request"
             });

@@ -46,18 +46,16 @@ public class LikePostController : ControllerBase
         catch (AggregateNotFoundException ex)
         {
             _logger.Log(LogLevel.Error, ex, "Couldn't not retrieve aggregate");
-            return BadRequest(new NewPostResponse
+            return BadRequest(new BaseResponse
             {
-                Id = id,
                 Message = "Bad Request"
             });
         }
         catch (Exception ex)
         {
             _logger.Log(LogLevel.Error, ex, "Error while processing LikePost request");
-            return StatusCode(StatusCodes.Status500InternalServerError, new NewPostResponse
+            return StatusCode(StatusCodes.Status500InternalServerError, new BaseResponse
             {
-                Id = id,
                 Message = "Error while processing the request"
             });
         }

@@ -9,28 +9,29 @@ namespace Post.Cmd.Api.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-public class EditCommentController : ControllerBase
+public class RemoveCommentController : ControllerBase
 {
-    private readonly ILogger<EditCommentController> _logger;
+    private readonly ILogger<RemoveCommentController> _logger;
     private readonly ICommandDispatcher _commandDispatcher;
 
-    public EditCommentController(ILogger<EditCommentController> logger, ICommandDispatcher commandDispatcher)
+    public RemoveCommentController(ILogger<RemoveCommentController> logger, ICommandDispatcher commandDispatcher)
     {
         _logger = logger;
         _commandDispatcher = commandDispatcher;
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> EditCommentAsync(Guid id, EditCommentCommand command)
+    public async Task<ActionResult> RemoveCommentAsync(Guid id, RemoveCommentCommand command)
     {
+
         try
         {
             command.Id = id;
             await _commandDispatcher.SendAsync(command);
 
-            return StatusCode(StatusCodes.Status200OK, new BaseResponse
+            return StatusCode(StatusCodes.Status204NoContent, new BaseResponse
             {
-                Message = "Comment Edited"
+                Message = "Comment deleted"
             });
         }
         catch (InvalidOperationException ex)
@@ -44,8 +45,9 @@ public class EditCommentController : ControllerBase
         catch (AggregateNotFoundException ex)
         {
             _logger.Log(LogLevel.Error, ex, "Couldn't not retrieve aggregate");
-            return BadRequest(new BaseResponse()
+            return BadRequest(new NewPostResponse
             {
+                Id = id,
                 Message = "Bad Request"
             });
         }

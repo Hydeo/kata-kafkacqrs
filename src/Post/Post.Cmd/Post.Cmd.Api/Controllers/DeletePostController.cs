@@ -9,19 +9,19 @@ namespace Post.Cmd.Api.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-public class RemoveCommentController : ControllerBase
+public class DeletePostController : ControllerBase
 {
     private readonly ILogger<RemoveCommentController> _logger;
     private readonly ICommandDispatcher _commandDispatcher;
 
-    public RemoveCommentController(ILogger<RemoveCommentController> logger, ICommandDispatcher commandDispatcher)
+    public DeletePostController(ILogger<RemoveCommentController> logger, ICommandDispatcher commandDispatcher)
     {
         _logger = logger;
         _commandDispatcher = commandDispatcher;
     }
-
+    
     [HttpDelete("{id}")]
-    public async Task<ActionResult> RemoveCommentAsync(Guid id, RemoveCommentCommand command)
+    public async Task<ActionResult> DeletePostAsync(Guid id, DeletePostCommand command)
     {
 
         try
@@ -53,7 +53,7 @@ public class RemoveCommentController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.Log(LogLevel.Error, ex, "Error while processing EditComment request");
+            _logger.Log(LogLevel.Error, ex, "Error while processing DeletePost request");
             return StatusCode(StatusCodes.Status500InternalServerError, new BaseResponse()
             {
                 Message = "Error while processing the request"

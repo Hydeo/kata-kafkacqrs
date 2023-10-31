@@ -33,7 +33,6 @@ public class EventStore : IEventStore
         {
             version++;
             @event.Version = version;
-            var eventType = @events.GetType().Name;
             var eventModel = new EventModel
             {
                 Version = version,

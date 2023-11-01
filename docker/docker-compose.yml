@@ -87,6 +87,9 @@ services:
       dockerfile: ../src/Post/Post.Cmd/Post.Cmd.Api/Dockerfile
     ports:
       - "8081:80"
+    depends_on:
+      - mongodb
+      - kafka
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - KAFKA_TOPIC=kafkacqrstopic
@@ -94,6 +97,26 @@ services:
       - MongoDbConfig__Database=kafkacqrsMongo
       - MongoDbConfig__Collection=eventStore
       - ProducerConfig__BootstrapServers=kafka:9094
+      
+  post.query.api:
+    image: post.query.api
+    build:
+      context: .
+      dockerfile: ../src/Post/Post.Query/Post.Query.Api/Dockerfile
+    ports:
+      - "8082:80"
+    depends_on:
+      - postgres
+      - kafka
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - KAFKA_TOPIC=kafkacqrstopic
+      - ConnectionStrings__SqlDb=Host=postgres;Port=5432;Database=postgres;Username=postgres;Password=changeme
+      - ConsumerConfig__GroupId=Post-Query-Consumer
+      - ConsumerConfig__BootstrapServers=kafka:9094
+      - ConsumerConfig__EnableAutoCommit=false
+      - ConsumerConfig__AutoOffsetReset=Earliest
+      - ConsumerConfig__AllowAutoCreateTopics=true
 
 volumes:
   zookeeper_data:

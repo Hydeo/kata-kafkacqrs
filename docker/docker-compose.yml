@@ -53,18 +53,7 @@ services:
     restart: always
     volumes:
       - "mongo_data:/data/db"
-  mssql:
-    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
-    container_name: mssql
-    ports:
-      - "1433:1433"
-    restart: always
-    environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=Hell0G1t
-      - MSSQL_PID=Express
-  
-  # Let's try to use both MSSQL & POSTGRESS interchangeably 
+
   postgres:
     container_name: postgres_container
     image: postgres
@@ -90,7 +79,21 @@ services:
     ports:
       - "${PGADMIN_PORT:-5050}:80"
     restart: unless-stopped
-
+  
+  post.cmd.api:
+    image: post.cmd.api
+    build:
+      context: .
+      dockerfile: ../src/Post/Post.Cmd/Post.Cmd.Api/Dockerfile
+    ports:
+      - "8081:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - KAFKA_TOPIC=kafkacqrstopic
+      - MongoDbConfig__ConnectionString=mongodb://mongodb:27017
+      - MongoDbConfig__Database=kafkacqrsMongo
+      - MongoDbConfig__Collection=eventStore
+      - ProducerConfig__BootstrapServers=kafka:9094
 
 volumes:
   zookeeper_data:

@@ -62,4 +62,16 @@ public class EventStore : IEventStore
 
          return eventStream.OrderBy(x => x.Version).Select(x => x.EventData).ToList();
     }
+
+    public async Task<List<Guid>> GetAggregateIdsAsync()
+    {
+        var eventStream = await _eventStoreRepository.FindAllAsync();
+
+        if (eventStream is null || !eventStream.Any())
+        {
+            throw new ArgumentNullException(nameof(eventStream), "Could not retrieve all events");
+        }
+
+        return eventStream.Select(x => x.AggregateIdentifier).Distinct().ToList();
+    }
 }

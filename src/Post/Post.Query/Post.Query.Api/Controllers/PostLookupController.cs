@@ -49,7 +49,7 @@ public class PostLookupController : ControllerBase
         }
     }
 
-    [HttpPost("{postId}")]
+    [HttpGet("{postId}")]
     public async Task<ActionResult> GetByIdAsync(Guid postId)
     {
         try
@@ -81,7 +81,7 @@ public class PostLookupController : ControllerBase
         }
     }
     
-    [HttpPost("byAuthor/{author}")]
+    [HttpGet("byAuthor/{author}")]
     public async Task<ActionResult> GetByAuthorAsync(string author)
     {
         try
@@ -113,8 +113,8 @@ public class PostLookupController : ControllerBase
         }
     }
     
-    [HttpPost("withComments")]
-    public async Task<ActionResult> GetWithCommentsAsync(string author)
+    [HttpGet("withComments")]
+    public async Task<ActionResult> GetWithCommentsAsync()
     {
         try
         {
@@ -142,7 +142,7 @@ public class PostLookupController : ControllerBase
         }
     }
     
-    [HttpPost("withComments")]
+    [HttpGet("withLikes/{minimumLikes}")]
     public async Task<ActionResult> GetWithLikeAsync(int minimumLikes)
     {
         try

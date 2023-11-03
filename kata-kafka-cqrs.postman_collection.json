@@ -1,0 +1,391 @@
+{
+	"info": {
+		"_postman_id": "fba67a64-3d95-4827-9ca7-c9451e9f5c3b",
+		"name": "kata-kafka-cqrs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "711422"
+	},
+	"item": [
+		{
+			"name": "[Command] New Post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"author\" : \"Yolo Bro\",\n    \"message\" : \"Pouet pouet 948\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{Post Service Port}}/api/v1/newPost",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{Post Service Port}}",
+					"path": [
+						"api",
+						"v1",
+						"newPost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Command] Restore Read DB",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"author\" : \"Yolo Bro\",\n    \"message\" : \"Pouet pouet 948\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{Post Service Port}}/api/v1/newPost",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{Post Service Port}}",
+					"path": [
+						"api",
+						"v1",
+						"newPost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Command] Edit Post",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"message\" : \"Edited Message\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{Post Service Port}}/api/v1/editPost/{{postAggregateID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{Post Service Port}}",
+					"path": [
+						"api",
+						"v1",
+						"editPost",
+						"{{postAggregateID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Command] Add Comment",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"comment\" : \"This is a post comment\",\n    \"username\" : \"Superman\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{Post Service Port}}/api/v1/AddComment/{{postAggregateID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{Post Service Port}}",
+					"path": [
+						"api",
+						"v1",
+						"AddComment",
+						"{{postAggregateID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Command] Edit Comment",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"commentId\" : \"f9a46e47-c943-448a-b0ac-1e45b8feb6c0\",\n    \"comment\" : \"Edited Comment !\",\n    \"username\" : \"Superman\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{Post Service Port}}/api/v1/EditComment/{{postAggregateID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{Post Service Port}}",
+					"path": [
+						"api",
+						"v1",
+						"EditComment",
+						"{{postAggregateID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Command] Like Post",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{Query Service Port}}/api/v1/postLookup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{Query Service Port}}",
+					"path": [
+						"api",
+						"v1",
+						"postLookup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Command] Remove Comment",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"commentId\" : \"f3a5w4d35ad\",\n    \"username\" : \"Superman\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{Post Service Port}}/api/v1/removeComment/{{postAggregateID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{Post Service Port}}",
+					"path": [
+						"api",
+						"v1",
+						"removeComment",
+						"{{postAggregateID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Command] Delete Post",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\" : \"Yolo Bro\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{Post Service Port}}/api/v1/deletePost/{{postAggregateID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{Post Service Port}}",
+					"path": [
+						"api",
+						"v1",
+						"deletePost",
+						"{{postAggregateID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Query] Find All Posts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{Query Service Port}}/api/v1/postLookup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{Query Service Port}}",
+					"path": [
+						"api",
+						"v1",
+						"postLookup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Query] Find Posts by Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{Query Service Port}}/api/v1/postLookup/f8c3c315-18cb-4fe9-9c6a-ab3d2b1c11a1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{Query Service Port}}",
+					"path": [
+						"api",
+						"v1",
+						"postLookup",
+						"f8c3c315-18cb-4fe9-9c6a-ab3d2b1c11a1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Query] Find Posts by Author",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{Query Service Port}}/api/v1/postLookup/byAuthor/Yolo Bro",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{Query Service Port}}",
+					"path": [
+						"api",
+						"v1",
+						"postLookup",
+						"byAuthor",
+						"Yolo Bro"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Query] Find Posts with Comments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{Query Service Port}}/api/v1/postLookup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{Query Service Port}}",
+					"path": [
+						"api",
+						"v1",
+						"postLookup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Query] Find Posts with minimum Likes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{Query Service Port}}/api/v1/postLookup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{Query Service Port}}",
+					"path": [
+						"api",
+						"v1",
+						"postLookup"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "postAggregateID",
+			"value": "f904a86f-a1df-4bdd-aeb2-dac07dd8035a",
+			"type": "string"
+		},
+		{
+			"key": "Post Service Port",
+			"value": "8081",
+			"type": "string"
+		},
+		{
+			"key": "Query Service Port",
+			"value": "8082",
+			"type": "string"
+		}
+	]
+}

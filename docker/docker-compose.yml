@@ -117,7 +117,23 @@ services:
       - ConsumerConfig__EnableAutoCommit=false
       - ConsumerConfig__AutoOffsetReset=Earliest
       - ConsumerConfig__AllowAutoCreateTopics=true
+  
+  mqtt5:
+    image: eclipse-mosquitto
+    ports:
+      - "1883:1883" #default mqtt port
+      - "9001:9001" #default mqtt port for websockets
+    volumes:
+      - ./mosquitto/config:/mosquitto/config:rw
+      - ./mosquitto/data:/mosquitto/data:rw
+      - ./mosquitto/log:/mosquitto/log:rw
 
+      
+  mqtt5-ui:
+    image: emqx/mqttx-web:latest
+    ports:
+      - "81:80" 
+  
 volumes:
   zookeeper_data:
     driver: local
@@ -131,8 +147,12 @@ volumes:
     driver: local
   pgadmin_data:
     driver: local
-
-
+  mosquitto_data:
+    driver: local
+  config:
+  data:
+  log:
+    
 networks:
   default:
     name: kafkacqrs-network

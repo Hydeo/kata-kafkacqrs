@@ -45,15 +45,27 @@ services:
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9094
       - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
 
+  #mongodb:
+  #  image: mongo:latest
+  #  container_name: mongo
+  #  ports:
+  #    - "27017:27017"
+  #  restart: always
+  #  volumes:
+  #    - "mongo_data:/data/db"
+
   mongodb:
+    container_name: mongodb
     image: mongo:latest
-    container_name: mongo
+    expose:
+      - 27017
     ports:
       - "27017:27017"
-    restart: always
     volumes:
-      - "mongo_data:/data/db"
-
+      - ./data/mongodb:/data/db
+      - ./scripts/mongodb/rs-initiate.js:/docker-entrypoint-initdb.d/rs-initiate.js
+    command: ["--replSet", "dbrs", "--bind_ip_all"]
+    
   postgres:
     container_name: postgres_container
     image: postgres

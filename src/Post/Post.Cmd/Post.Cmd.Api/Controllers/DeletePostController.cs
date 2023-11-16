@@ -11,10 +11,10 @@ namespace Post.Cmd.Api.Controllers;
 [Route("api/v1/[controller]")]
 public class DeletePostController : ControllerBase
 {
-    private readonly ILogger<RemoveCommentController> _logger;
+    private readonly ILogger<DeletePostController> _logger;
     private readonly ICommandDispatcher _commandDispatcher;
 
-    public DeletePostController(ILogger<RemoveCommentController> logger, ICommandDispatcher commandDispatcher)
+    public DeletePostController(ILogger<DeletePostController> logger, ICommandDispatcher commandDispatcher)
     {
         _logger = logger;
         _commandDispatcher = commandDispatcher;

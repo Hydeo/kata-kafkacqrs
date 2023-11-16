@@ -12,28 +12,30 @@ public class EventStore : IEventStore
 {
     private readonly IEventStoreRepository _eventStoreRepository;
     private readonly IEventProducer _eventProducer;
+
     public EventStore(IEventStoreRepository eventStoreRepository, IEventProducer eventProducer)
     {
         _eventStoreRepository = eventStoreRepository;
         _eventProducer = eventProducer;
     }
+
     public async Task SaveEventAsync(Guid aggregateId, IEnumerable<BaseEvent> events, int expectedVersion)
     {
         var eventStream = await _eventStoreRepository.FindByAggregateId(aggregateId);
 
         //Optimistic Concurrency Control Check
-        if (expectedVersion != -1 && eventStream[eventStream.Count-1].Version != expectedVersion)
+        if (expectedVersion != -1 && eventStream[eventStream.Count - 1].Version != expectedVersion)
         {
             throw new ConcurrencyException();
         }
 
         var version = expectedVersion;
-
+        var eventModels = new List<EventModel>();
         foreach (var @event in events)
         {
             version++;
             @event.Version = version;
-            var eventModel = new EventModel
+            eventModels.Add(new EventModel
             {
                 Version = version,
                 EventData = @event,
@@ -41,26 +43,36 @@ public class EventStore : IEventStore
                 EventType = @event.Type,
                 TimeStamp = DateTime.UtcNow,
                 AggregateType = nameof(PostAggregate)
-            };
-            
-            // TODO: We might want to have some sort of transaction here to make sure both Mongo & Kafka report success or rollback.
-            await _eventStoreRepository.SaveAsync(eventModel);
-
+            });
+        }
+        
+        try
+        {
+            await _eventStoreRepository.SaveAllAsync(eventModels);
             var topic = Environment.GetEnvironmentVariable("KAFKA_TOPIC");
-            await _eventProducer.ProduceAsync(topic, @event);
+            await _eventProducer.ProduceAllAsync(topic, events);
+
+            await _eventStoreRepository.CommitTransactionalSession();
+            _eventProducer.CommitTransactionalProducer();
+        }
+        catch (Exception ex)
+        {
+            await _eventStoreRepository.RollbackTransactionalSession();
+            _eventProducer.RollbackTransactionalProducer();
+            throw;
         }
     }
 
     public async Task<List<BaseEvent>> GetEventsAsync(Guid aggregateId)
     {
-         var eventStream = await _eventStoreRepository.FindByAggregateId(aggregateId);
+        var eventStream = await _eventStoreRepository.FindByAggregateId(aggregateId);
 
-         if (eventStream is null || !eventStream.Any())
-         {
-             throw new AggregateNotFoundException($"Invalid {nameof(Post)} ID provided");
-         }
+        if (eventStream is null || !eventStream.Any())
+        {
+            throw new AggregateNotFoundException($"Invalid {nameof(Post)} ID provided");
+        }
 
-         return eventStream.OrderBy(x => x.Version).Select(x => x.EventData).ToList();
+        return eventStream.OrderBy(x => x.Version).Select(x => x.EventData).ToList();
     }
 
     public async Task<List<Guid>> GetAggregateIdsAsync()
